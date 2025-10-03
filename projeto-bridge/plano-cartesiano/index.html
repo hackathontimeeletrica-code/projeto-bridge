@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Plano Cartesiano - Projeto Bridge</title>
+    
+    <style>
+        :root {
+            --cor-fundo: #121212;
+            --cor-container: #1e1e1e;
+            --cor-texto: #e0e0e0;
+            --cor-destaque: #00aaff;
+            --cor-sombra: rgba(0, 0, 0, 0.4);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 700px; /* Um pouco maior para caber o texto */
+            background-color: var(--cor-container);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 20px var(--cor-sombra);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 { font-size: 2.2rem; color: white; text-align: center; margin-bottom: 20px; }
+        p { line-height: 1.7; }
+        audio { width: 100%; margin-top: 20px; }
+        .transcricao { text-align: left; margin-top: 30px; color: #bbb; }
+        .transcricao h2 { font-size: 1.2rem; color: var(--cor-destaque); margin-bottom: 10px; border-bottom: 1px solid #444; padding-bottom: 5px; }
+        .voltar { display: inline-block; margin-top: 30px; color: var(--cor-destaque); text-decoration: none; font-weight: bold; }
+        .voltar:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <h1>Placa: Plano Cartesiano</h1>
+        
+        <p>Clique no play abaixo para ouvir a descrição detalhada desta placa.</p>
+        
+        <audio controls autoplay>
+            <source src="./audio-plano-cartesiano.mp3" type="audio/mpeg">
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
+
+        <div class="transcricao">
+            <h2>Transcrição do Áudio</h2>
+            <p>
+                Esta placa representa um plano cartesiano, uma ferramenta fundamental na matemática e na engenharia. Ele é formado por dois eixos perpendiculares: o eixo horizontal, chamado de Eixo X ou eixo das abscissas, e o eixo vertical, chamado de Eixo Y ou eixo das ordenadas. O ponto onde os eixos se cruzam é a origem...
+            </p>
+        </div>
+        
+        <a href="../" class="voltar">← Voltar para a página inicial</a>
+    </main>
+
+</body>
+</html>
