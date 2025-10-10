@@ -14,27 +14,54 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--cor-fundo); color: var(--cor-texto); line-height: 1.7;
         }
-        /* AJUSTE NO PREENCHIMENTO DO CONTAINER PARA DAR MAIS ESPAÇO NO TOPO */
-        .container { width: 90%; max-width: 900px; margin: 40px auto; background-color: var(--cor-container); border-radius: 12px; padding: 40px; box-shadow: 0 8px 20px var(--cor-sombra); border: 1px solid rgba(255, 255, 255, 0.1); }
+        
+        /* --- MUDANÇAS NO LAYOUT AQUI --- */
+
+        .container { 
+            width: 100%; /* Ocupa a largura toda por padrão (mobile) */
+            min-height: 100vh;
+            background-color: var(--cor-container);
+            padding: 40px 20px; /* Espaçamento interno para o conteúdo não colar nas bordas */
+        }
+        
         h1, h2 { color: white; text-align: center; margin-bottom: 20px; }
         h1 { font-size: 2.5rem; color: var(--cor-destaque); }
         h2 { font-size: 1.8rem; margin-top: 40px; border-bottom: 1px solid #444; padding-bottom: 10px; }
         p, li { color: #bbb; margin-bottom: 15px; }
-        section { margin-bottom: 30px; }
+        section { margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto; } /* Centraliza o conteúdo de texto */
+
         .placas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 30px; text-align: center; }
         .placa-card { background-color: #2a2a2a; border-radius: 8px; padding: 20px; border: 1px solid #333; }
         .placa-card h3 { color: #fff; margin-bottom: 15px; }
         .placa-card img { max-width: 100%; height: auto; border-radius: 5px; margin-bottom: 15px; }
+        
         .btn { display: inline-block; margin-top: 15px; padding: 12px 25px; background-color: var(--cor-destaque); color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background-color 0.3s; text-align: center; }
         .btn:hover { background-color: #0088cc; }
+        
         .equipe ul { list-style: none; text-align: center; padding: 0; }
+        
         blockquote { border-left: 4px solid var(--cor-destaque); padding-left: 20px; margin: 20px 0; font-style: italic; color: #ccc; }
         blockquote footer { font-style: normal; color: #aaa; margin-top: 10px; font-weight: bold; }
-        .links-uteis { text-align: center; }
-        .voltar { display: block; text-align: center; margin-top: 40px; color: var(--cor-destaque); font-weight: bold; text-decoration: none; font-size: 1.1em; }
-        .voltar:hover { text-decoration: underline; }
+
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; margin-bottom: 30px; border-radius: 8px; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        .voltar { display: block; text-align: center; margin-top: 40px; color: var(--cor-destaque); font-weight: bold; text-decoration: none; font-size: 1.1em; }
+        .voltar:hover { text-decoration: underline; }
+
+        /* --- MEDIA QUERY PARA TELAS MAIORES --- */
+        /* As regras abaixo só aplicam em telas com 768px de largura ou mais (tablets e desktops) */
+        @media (min-width: 768px) {
+            .container {
+                width: 90%;
+                max-width: 900px;
+                margin: 40px auto; /* Centraliza o container com margens */
+                border-radius: 12px; /* Adiciona as bordas arredondadas de volta */
+                padding: 40px;
+                box-shadow: 0 8px 20px var(--cor-sombra);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
     </style>
 </head>
 <body>
@@ -49,11 +76,6 @@
         <section class="solucao">
             <h2>Nossa Solução</h2>
             <p>Desenvolvemos placas táteis, impressas em 3D, que simulam a tela de um osciloscópio, a principal ferramenta para visualizar sinais elétricos. Cada placa possui um QR Code que leva a uma página web com uma audiodescrição guiada, permitindo a exploração tátil dos fenômenos elétricos e conectando a teoria à prática de forma acessível.</p>
-        </section>
-
-        <section class="tecnologia">
-            <h2>Tecnologia e Inovação</h2>
-            <p>Nossa solução une o baixo custo e a padronização da impressão 3D com a acessibilidade dos QR Codes e da audiodescrição gerada por IA. Isso torna o projeto altamente escalável, permitindo que escolas e associações em qualquer lugar do mundo possam baixar e imprimir os modelos. A tecnologia de IA também possibilita a tradução dos áudios, ampliando o alcance global da iniciativa.</p>
         </section>
 
         <section class="validacao">
