@@ -4,20 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Placas Acessíveis para Ensino de Elétrica</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --cor-fundo: #121212; --cor-container: #1e1e1e; --cor-texto: #e0e0e0;
-            --cor-destaque: #00aaff; --cor-sombra: rgba(0, 0, 0, 0.4);
+            --cor-fundo: #0d1117; /* Um tom de preto azulado, como o do GitHub */
+            --cor-container: rgba(22, 27, 34, 0.8); /* Container semi-transparente */
+            --cor-texto: #c9d1d9; /* Cinza claro, confortável para ler */
+            --cor-destaque: #58a6ff; /* Azul mais claro e vibrante */
+            --cor-sombra: rgba(0, 0, 0, 0.5);
+            --cor-borda: rgba(139, 148, 158, 0.3);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--cor-fundo);
             color: var(--cor-texto);
+            /* --- Animação do Fundo --- */
+            background: linear-gradient(315deg, #0d1117, #161b22, #010409);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
         }
 
-        /* --- CSS ATUALIZADO PARA LAYOUT RESPONSIVO --- */
+        /* Keyframes para a animação do gradiente */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .container {
             width: 100%;
             min-height: 100vh;
@@ -26,38 +50,69 @@
             justify-content: center;
             align-items: center;
             padding: 40px 20px;
-        }
-        
-        header { text-align: center; margin-bottom: 30px; }
-        h1 { font-size: 2.2rem; color: white; margin-bottom: 10px; }
-        p { line-height: 1.7; text-align: center; margin-bottom: 30px; max-width: 500px; }
-        nav { width: 100%; max-width: 500px; }
-        nav ul { list-style: none; }
-        li { margin-bottom: 15px; }
-        nav a {
-            display: block; background-color: transparent; color: var(--cor-destaque);
-            padding: 15px 20px; border-radius: 8px; text-decoration: none; text-align: center;
-            font-weight: bold; border: 2px solid var(--cor-destaque);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        nav a:hover, nav a:focus {
-            background-color: var(--cor-destaque); color: var(--cor-container);
-            outline: none; box-shadow: 0 0 10px var(--cor-destaque);
+            text-align: center;
+            /* --- Animação de Entrada --- */
+            animation: fadeIn 1s ease-in-out;
         }
 
-        /* Regras para telas maiores (tablets e desktops) */
-        @media (min-width: 768px) {
-            .container {
-                width: 90%;
-                max-width: 600px; /* Largura original da página principal */
-                margin: 40px auto;
-                border-radius: 12px;
-                background-color: var(--cor-container);
-                padding: 40px;
-                box-shadow: 0 8px 20px var(--cor-sombra);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                min-height: auto; /* Altura auto em telas grandes */
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        header {
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.8rem; /* Título maior */
+            color: white;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        p {
+            line-height: 1.8;
+            max-width: 500px;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            color: #8b949e; /* Cinza um pouco mais escuro para o parágrafo */
+        }
+
+        nav {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        nav a {
+            display: block;
+            background-color: var(--cor-container);
+            color: var(--cor-destaque);
+            padding: 18px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 1px solid var(--cor-borda);
+            backdrop-filter: blur(10px); /* Efeito de vidro fosco, se o navegador suportar */
+            transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            transform: translateY(-3px); /* Efeito de "levantar" */
+            background-color: rgba(88, 166, 255, 0.2);
+            outline: none;
+            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.2);
         }
     </style>
 </head>
@@ -66,9 +121,11 @@
         <header>
             <h1>Placas Acessíveis para Ensino de Elétrica</h1>
         </header>
+        
         <p>
-            Bem-vindo! Este site apresenta uma série de placas táteis e auditivas para o ensino de conceitos de engenharia elétrica. Navegue pelos links abaixo para acessar o conteúdo de cada placa ou para saber mais sobre o projeto.
+            Bem-vindo! Um projeto que transforma conceitos complexos de engenharia elétrica em experiências táteis e auditivas, tornando o aprendizado acessível para todos.
         </p>
+        
         <nav>
             <ul>
                 <li><a href="./plano-cartesiano/">Placa: Plano Cartesiano</a></li>
