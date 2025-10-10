@@ -14,7 +14,8 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--cor-fundo); color: var(--cor-texto); line-height: 1.7;
         }
-        .container { width: 90%; max-width: 900px; margin: 40px auto; background-color: var(--cor-container); border-radius: 12px; padding: 20px 40px; box-shadow: 0 8px 20px var(--cor-sombra); border: 1px solid rgba(255, 255, 255, 0.1); }
+        /* AJUSTE NO PREENCHIMENTO DO CONTAINER PARA DAR MAIS ESPAÇO NO TOPO */
+        .container { width: 90%; max-width: 900px; margin: 40px auto; background-color: var(--cor-container); border-radius: 12px; padding: 40px; box-shadow: 0 8px 20px var(--cor-sombra); border: 1px solid rgba(255, 255, 255, 0.1); }
         h1, h2 { color: white; text-align: center; margin-bottom: 20px; }
         h1 { font-size: 2.5rem; color: var(--cor-destaque); }
         h2 { font-size: 1.8rem; margin-top: 40px; border-bottom: 1px solid #444; padding-bottom: 10px; }
@@ -42,21 +43,26 @@
         
         <section class="problema">
             <h2>O Problema</h2>
-            <p>A principal barreira enfrentada por pessoas cegas no aprendizado dos princípios da eletricidade está diretamente relacionada à dependência visual dos conteúdos...</p>
+            <p>O aprendizado de eletricidade para pessoas cegas é dificultado pela alta dependência de gráficos e representações visuais. Conceitos como ondas senoidais, quadradas e triangulares são de difícil compreensão sem recursos táteis e sonoros adequados, o que compromete a inclusão e o aprendizado em todos os níveis educacionais.</p>
         </section>
 
         <section class="solucao">
             <h2>Nossa Solução</h2>
-            <p>A solução proposta consiste no desenvolvimento de placas táteis impressas em 3D que representam as telas de um osciloscópio...</p>
+            <p>Desenvolvemos placas táteis, impressas em 3D, que simulam a tela de um osciloscópio, a principal ferramenta para visualizar sinais elétricos. Cada placa possui um QR Code que leva a uma página web com uma audiodescrição guiada, permitindo a exploração tátil dos fenômenos elétricos e conectando a teoria à prática de forma acessível.</p>
         </section>
-        
+
+        <section class="tecnologia">
+            <h2>Tecnologia e Inovação</h2>
+            <p>Nossa solução une o baixo custo e a padronização da impressão 3D com a acessibilidade dos QR Codes e da audiodescrição gerada por IA. Isso torna o projeto altamente escalável, permitindo que escolas e associações em qualquer lugar do mundo possam baixar e imprimir os modelos. A tecnologia de IA também possibilita a tradução dos áudios, ampliando o alcance global da iniciativa.</p>
+        </section>
+
         <section class="validacao">
             <h2>Validação</h2>
             <div class="video-container">
                 <iframe src="https://www.youtube.com/embed/GMZYKEF6v8Y" title="Depoimento em vídeo sobre o projeto Eletricidade sem Barreiras" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             <blockquote>
-                "O projeto se constitui como valioso material para a compreensão dos fenômenos da eletricidade..."
+                "O projeto se constitui como valioso material para a compreensão dos fenômenos da eletricidade, visto que aquilo que sempre foi invisível e teórico para quem não enxerga, passa a ser concreto..."
                 <footer>— Rodrigo Galhardi, Diretor da Associação de Assistência aos Deficientes Visuais de Poços de Caldas</footer>
             </blockquote>
         </section>
@@ -78,7 +84,6 @@
                     <img src="../assets/foto-plano-cartesiano.jpeg" alt="Foto da placa 3D do Plano Cartesiano">
                     <img src="../assets/qrcode-plano-cartesiano.jpeg" alt="QR Code para o áudio do Plano Cartesiano">
                 </div>
-
                 <div class="placa-card">
                     <h3>Onda Senoidal</h3>
                     <img src="../assets/foto-onda-senoidal.jpeg" alt="Foto da placa 3D da Onda Senoidal">
