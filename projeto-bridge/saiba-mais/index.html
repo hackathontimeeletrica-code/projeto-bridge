@@ -32,25 +32,8 @@
         .links-uteis { text-align: center; }
         .voltar { display: block; text-align: center; margin-top: 40px; color: var(--cor-destaque); font-weight: bold; text-decoration: none; font-size: 1.1em; }
         .voltar:hover { text-decoration: underline; }
-
-        /* ESTILO ADICIONADO PARA O VÍDEO RESPONSIVO */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* Proporção 16:9 para vídeo wide */
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-            background: #000;
-            margin-bottom: 30px;
-            border-radius: 8px; /* Cantos arredondados */
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; margin-bottom: 30px; border-radius: 8px; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
     </style>
 </head>
 <body>
@@ -69,13 +52,11 @@
         
         <section class="validacao">
             <h2>Validação</h2>
-
             <div class="video-container">
                 <iframe src="https://www.youtube.com/embed/GMZYKEF6v8Y" title="Depoimento em vídeo sobre o projeto Eletricidade sem Barreiras" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
-
             <blockquote>
-                "O projeto se constitui como valioso material para a compreensão dos fenômenos da eletricidade, visto que aquilo que sempre foi invisível e teórico para quem não enxerga, passa a ser concreto..."
+                "O projeto se constitui como valioso material para a compreensão dos fenômenos da eletricidade..."
                 <footer>— Rodrigo Galhardi, Diretor da Associação de Assistência aos Deficientes Visuais de Poços de Caldas</footer>
             </blockquote>
         </section>
@@ -94,13 +75,14 @@
             <div class="placas-grid">
                 <div class="placa-card">
                     <h3>Plano Cartesiano</h3>
-                    <img src="../assets/foto-plano-cartesiano.jpg" alt="Foto da placa 3D do Plano Cartesiano">
-                    <img src="../assets/qrcode-plano-cartesiano.png" alt="QR Code para o áudio do Plano Cartesiano">
+                    <img src="../assets/foto-plano-cartesiano.jpeg" alt="Foto da placa 3D do Plano Cartesiano">
+                    <img src="../assets/qrcode-plano-cartesiano.jpeg" alt="QR Code para o áudio do Plano Cartesiano">
                 </div>
+
                 <div class="placa-card">
                     <h3>Onda Senoidal</h3>
-                    <img src="../assets/foto-senoidal.jpg" alt="Foto da placa 3D da Onda Senoidal">
-                    <img src="../assets/qrcode-senoidal.png" alt="QR Code para o áudio da Onda Senoidal">
+                    <img src="../assets/foto-onda-senoidal.jpeg" alt="Foto da placa 3D da Onda Senoidal">
+                    <img src="../assets/qrcode-onda-senoidal.jpeg" alt="QR Code para o áudio da Onda Senoidal">
                 </div>
             </div>
             <a href="../assets/modelos-3d-bridge.zip" class="btn" download>Baixar todos os arquivos .STL</a>
