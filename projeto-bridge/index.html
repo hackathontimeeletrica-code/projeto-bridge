@@ -3,104 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Placas Acessíveis para Ensino de Elétrica</title>
-    
     <style>
         :root {
-            --cor-fundo: #121212;
-            --cor-container: #1e1e1e;
-            --cor-texto: #e0e0e0;
-            --cor-destaque: #00aaff;
-            --cor-sombra: rgba(0, 0, 0, 0.4);
+            --cor-fundo: #121212; --cor-container: #1e1e1e; --cor-texto: #e0e0e0;
+            --cor-destaque: #00aaff; --cor-sombra: rgba(0, 0, 0, 0.4);
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--cor-fundo);
             color: var(--cor-texto);
+        }
+
+        /* --- CSS ATUALIZADO PARA LAYOUT RESPONSIVO --- */
+        .container {
+            width: 100%;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            background-color: var(--cor-container);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 8px 20px var(--cor-sombra);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            color: white;
-            margin-bottom: 10px;
+            padding: 40px 20px;
         }
         
-        p {
-            line-height: 1.7;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        nav ul {
-            list-style: none;
-        }
-
-        li {
-            margin-bottom: 15px;
-        }
-
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { font-size: 2.2rem; color: white; margin-bottom: 10px; }
+        p { line-height: 1.7; text-align: center; margin-bottom: 30px; max-width: 500px; }
+        nav { width: 100%; max-width: 500px; }
+        nav ul { list-style: none; }
+        li { margin-bottom: 15px; }
         nav a {
-            display: block;
-            background-color: transparent;
-            color: var(--cor-destaque);
-            padding: 15px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            text-align: center;
-            font-weight: bold;
-            border: 2px solid var(--cor-destaque);
+            display: block; background-color: transparent; color: var(--cor-destaque);
+            padding: 15px 20px; border-radius: 8px; text-decoration: none; text-align: center;
+            font-weight: bold; border: 2px solid var(--cor-destaque);
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+        nav a:hover, nav a:focus {
+            background-color: var(--cor-destaque); color: var(--cor-container);
+            outline: none; box-shadow: 0 0 10px var(--cor-destaque);
+        }
 
-        nav a:hover,
-        nav a:focus {
-            background-color: var(--cor-destaque);
-            color: var(--cor-container);
-            outline: none;
-            box-shadow: 0 0 10px var(--cor-destaque);
+        /* Regras para telas maiores (tablets e desktops) */
+        @media (min-width: 768px) {
+            .container {
+                width: 90%;
+                max-width: 600px; /* Largura original da página principal */
+                margin: 40px auto;
+                border-radius: 12px;
+                background-color: var(--cor-container);
+                padding: 40px;
+                box-shadow: 0 8px 20px var(--cor-sombra);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                min-height: auto; /* Altura auto em telas grandes */
+            }
         }
     </style>
 </head>
 <body>
-
     <main class="container">
         <header>
             <h1>Placas Acessíveis para Ensino de Elétrica</h1>
         </header>
-        
         <p>
             Bem-vindo! Este site apresenta uma série de placas táteis e auditivas para o ensino de conceitos de engenharia elétrica. Navegue pelos links abaixo para acessar o conteúdo de cada placa ou para saber mais sobre o projeto.
         </p>
-        
         <nav>
             <ul>
                 <li><a href="./plano-cartesiano/">Placa: Plano Cartesiano</a></li>
@@ -109,6 +77,5 @@
             </ul>
         </nav>
     </main>
-
 </body>
 </html>
