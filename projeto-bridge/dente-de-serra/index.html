@@ -55,6 +55,16 @@
         /* INÍCIO DO NOVO CSS (PLAYER ACESSÍVEL)             */
         /* =================================================== */
 
+        /* Classe para esconder visualmente mas manter para leitores de tela */
+        .sr-only {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
         /* Link "Pular" para acessibilidade */
         .skip-link {
             position: absolute;
@@ -81,8 +91,8 @@
         /* Container do botão player */
         .player-controls {
             width: 100%;
-            max-width: 600px; /* Alinhe com o max-width do container para telas grandes */
-            padding: 10px 0 20px 0; /* Espaçamento */
+            max-width: 600px;
+            padding: 10px 0 20px 0; 
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -90,41 +100,30 @@
         }
 
         #botao-player-principal {
-            /* --- TAMANHO E LAYOUT --- */
             width: 100%;           
             min-height: 70px;      
             padding: 15px;         
-
-            /* --- VISUAL (Usando suas variáveis!) --- */
             font-size: 1.5rem;     
             font-weight: bold;     
-            color: var(--cor-fundo);  /* Cor do texto (escura) */
-            background-color: var(--cor-destaque); /* Cor de fundo (clara) */
-            
+            color: var(--cor-fundo);  
+            background-color: var(--cor-destaque);
             border: none;          
             border-radius: 8px;    
             cursor: pointer;       
-
-            /* Alinhamento do ícone e texto */
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            
-            /* Transição suave para o foco */
             transition: outline-offset 0.1s ease;
-            margin-bottom: 15px; /* Espaço entre o botão e a barra de progresso */
+            margin-bottom: 15px; /* Espaço para a barra de progresso */
         }
 
-        /* Foco visível para acessibilidade */
         #botao-player-principal:focus {
             outline: 4px solid var(--cor-destaque);
             outline-offset: 4px;
         }
 
-        /* =================================================== */
-        /* ESTILOS DA LINHA DO TEMPO (Progress Bar)          */
-        /* =================================================== */
+        /* ESTILOS DA LINHA DO TEMPO (Progress Bar) */
         .progress-container {
             width: 100%;
             display: flex;
@@ -132,35 +131,35 @@
             gap: 10px;
             color: var(--cor-texto);
             font-size: 0.9rem;
-            margin-bottom: 10px; /* Espaço abaixo da barra */
+            margin-bottom: 10px; 
         }
 
         #progress-bar {
-            flex-grow: 1; /* Faz a barra ocupar o máximo de espaço */
-            -webkit-appearance: none; /* Remove estilos padrão do navegador */
+            flex-grow: 1; 
+            -webkit-appearance: none; 
             appearance: none;
-            height: 12px; /* Altura da barra */
-            border-radius: 6px; /* Cantos arredondados */
+            height: 12px; 
+            border-radius: 6px; 
             background: var(--cor-barra-vazia);
             outline: none;
             cursor: pointer;
-            transition: opacity .2s; /* Efeito de hover */
+            transition: opacity .2s; 
         }
 
         #progress-bar:hover {
             opacity: 0.8;
         }
 
-        /* Estilo do "thumb" (o círculo ou quadrado que você arrasta) */
+        /* Estilo do "thumb" (o círculo que arrasta) */
         #progress-bar::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 20px; /* Tamanho do thumb */
+            width: 20px; 
             height: 20px;
-            border-radius: 50%; /* Faz ele redondo */
+            border-radius: 50%; 
             background: var(--cor-thumb);
             cursor: pointer;
-            margin-top: -4px; /* Ajusta a posição vertical do thumb */
+            margin-top: -4px; 
             box-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
 
@@ -172,19 +171,43 @@
             cursor: pointer;
         }
 
-        /* Estilo da parte preenchida da barra (antes do thumb) */
+        /* Estilo da parte preenchida da barra (para navegadores WebKit) */
+        /* Usamos uma variável CSS (--progress-value) para controlar o preenchimento via JS */
         #progress-bar::-webkit-slider-runnable-track {
-            background: linear-gradient(to right, var(--cor-barra-preenchida) var(--progress-value), var(--cor-barra-vazia) var(--progress-value));
+            background: linear-gradient(to right, var(--cor-barra-preenchida) var(--progress-value, 0%), var(--cor-barra-vazia) var(--progress-value, 0%));
             border-radius: 6px;
             height: 12px;
         }
         #progress-bar::-moz-range-track {
-            background: linear-gradient(to right, var(--cor-barra-preenchida) var(--progress-value), var(--cor-barra-vazia) var(--progress-value));
+             background: linear-gradient(to right, var(--cor-barra-preenchida) var(--progress-value, 0%), var(--cor-barra-vazia) var(--progress-value, 0%));
             border-radius: 6px;
             height: 12px;
         }
 
-
+        /* ESTILOS DO CONTROLE DE VELOCIDADE */
+        .speed-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 15px; /* Espaço acima dos botões */
+        }
+        .speed-btn {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--cor-destaque);
+            background-color: transparent;
+            border: 2px solid var(--cor-destaque);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Estilo do botão de velocidade ativo */
+        .speed-btn[aria-pressed="true"] {
+            background-color: var(--cor-destaque);
+            color: var(--cor-fundo);
+        }
+        
         /* =================================================== */
         /* FIM DO NOVO CSS                                 */
         /* =================================================== */
@@ -206,6 +229,8 @@
     </style>
 </head>
 <body>
+
+    <div id="status-anunciador" class="sr-only" aria-live="polite" aria-atomic="true"></div>
     
     <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
 
@@ -214,6 +239,7 @@
         <h1>Placa: Onda Dente de Serra</h1>
 
         <div class="player-controls">
+            
             <button id="botao-player-principal" aria-label="Ouvir descrição da onda dente de serra">
                 ▶ Ouvir Descrição
             </button>
@@ -223,10 +249,28 @@
                 <input type="range" id="progress-bar" value="0" min="0" max="100" aria-label="Barra de progresso do áudio">
                 <span id="duration-time">0:00</span>
             </div>
+
+            <div class="speed-controls" role="group" aria-label="Controle de velocidade">
+                <button class="speed-btn" data-speed="1">1x</button>
+                <button class="speed-btn" data-speed="1.5">1.5x</button>
+                <button class="speed-btn" data-speed="2">2x</button>
+            </div>
         </div>
         
         <div class="gif-container">
             <img class="gif-invertido" src="./gif-dente-de-serra.gif" alt="Animação 3D da placa da onda dente de serra girando">
+        </div>
+
+        <div class="sr-only">
+            <h3>Descrição da Placa Tátil</h3>
+            <p>
+                A placa tátil 3D exibe a forma de onda dente de serra. 
+                Possui uma linha de base texturizada para representar o eixo do tempo. 
+                A onda em si é um relevo alto que sobe linearmente da linha de base até seu pico máximo e, 
+                em seguida, cai abruptamente de volta à linha de base, repetindo o ciclo. 
+                Inscrições em Braille na parte superior indicam "ONDA DENTE DE SERRA".
+                (Substitua este texto pela descrição real da sua placa).
+            </p>
         </div>
         
         <audio id="audio-da-pagina">
@@ -247,13 +291,16 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Pegando todos os elementos
             const botaoPlayer = document.getElementById('botao-player-principal');
             const audioPlayer = document.getElementById('audio-da-pagina');
             const progressBar = document.getElementById('progress-bar');
             const currentTimeSpan = document.getElementById('current-time');
             const durationTimeSpan = document.getElementById('duration-time');
+            const anunciador = document.getElementById('status-anunciador');
+            const speedButtons = document.querySelectorAll('.speed-btn');
 
-            if (botaoPlayer && audioPlayer && progressBar && currentTimeSpan && durationTimeSpan) {
+            if (botaoPlayer && audioPlayer && progressBar && currentTimeSpan && durationTimeSpan && anunciador && speedButtons.length > 0) {
                 
                 // === LÓGICA DO BOTÃO PLAY/PAUSE/RESTART ===
                 botaoPlayer.addEventListener('click', () => {
@@ -267,54 +314,83 @@
                 audioPlayer.addEventListener('play', () => {
                     botaoPlayer.innerHTML = '⏸ Pausar Descrição';
                     botaoPlayer.setAttribute('aria-label', 'Pausar descrição');
+                    // IDEIA 1: Anuncia a ação
+                    anunciador.textContent = 'Áudio iniciado.'; 
                 });
 
                 audioPlayer.addEventListener('pause', () => {
                     if (!audioPlayer.ended) {
                         botaoPlayer.innerHTML = '▶ Continuar Descrição';
                         botaoPlayer.setAttribute('aria-label', 'Continuar descrição');
+                        // IDEIA 1: Anuncia a ação
+                        anunciador.textContent = 'Áudio pausado.';
                     }
                 });
 
                 audioPlayer.addEventListener('ended', () => {
                     botaoPlayer.innerHTML = '▶ Reiniciar Descrição';
                     botaoPlayer.setAttribute('aria-label', 'Reiniciar descrição');
-                    // Opcional: garantir que o tempo volte a 0.
-                    // audioPlayer.currentTime = 0; 
+                    // IDEIA 1: Anuncia a ação
+                    anunciador.textContent = 'Áudio terminado. Pronto para reiniciar.';
                 });
 
                 // === LÓGICA DA BARRA DE PROGRESSO ===
 
-                // Quando o áudio estiver carregado e pronto para tocar (metadados disponíveis)
-                audioPlayer.addEventListener('loadedmetadata', () => {
-                    durationTimeSpan.textContent = formatTime(audioPlayer.duration);
-                    progressBar.max = audioPlayer.duration; // Define o valor máximo da barra
-                    
-                    // Adiciona uma propriedade CSS customizada para estilizar o preenchimento da barra
-                    // Isso é necessário porque input type="range" é chato de estilizar em navegadores diferentes
-                    const updateProgressFill = () => {
-                        const value = (progressBar.value / progressBar.max) * 100;
-                        progressBar.style.setProperty('--progress-value', `${value}%`);
-                    };
-                    updateProgressFill(); // Garante que o preenchimento inicial esteja correto
-                    
-                    // Listener para quando o valor da barra de progresso muda (seja por JS ou arrastando)
-                    progressBar.addEventListener('input', updateProgressFill);
-                });
-
-                // Atualiza a barra de progresso e o tempo atual enquanto o áudio toca
-                audioPlayer.addEventListener('timeupdate', () => {
-                    progressBar.value = audioPlayer.currentTime;
-                    currentTimeSpan.textContent = formatTime(audioPlayer.currentTime);
-                    
-                    // Atualiza o preenchimento da barra para navegadores que não suportam o estilo nativo
-                    const value = (progressBar.value / progressBar.max) * 100;
+                // Atualiza o preenchimento da barra (para o estilo visual)
+                const updateProgressFill = () => {
+                    const value = (progressBar.value / progressBar.max) * 100 || 0;
                     progressBar.style.setProperty('--progress-value', `${value}%`);
+                };
+
+                // Quando o áudio estiver carregado
+                audioPlayer.addEventListener('loadedmetadata', () => {
+                    const duration = audioPlayer.duration;
+                    durationTimeSpan.textContent = formatTime(duration);
+                    progressBar.max = duration;
+                    updateProgressFill();
                 });
 
-                // Quando o usuário interage com a barra de progresso (arrasta ou clica)
+                // Atualiza a barra e os tempos enquanto o áudio toca
+                audioPlayer.addEventListener('timeupdate', () => {
+                    const currentTime = audioPlayer.currentTime;
+                    progressBar.value = currentTime;
+                    currentTimeSpan.textContent = formatTime(currentTime);
+                    
+                    // IDEIA 2: Faz a barra "falar" o tempo atual
+                    progressBar.setAttribute('aria-valuetext', `Tempo atual: ${formatTime(currentTime)}`);
+                    
+                    updateProgressFill();
+                });
+
+                // Quando o usuário interage com a barra de progresso
                 progressBar.addEventListener('input', () => {
                     audioPlayer.currentTime = progressBar.value;
+                    
+                    // IDEIA 2: Fala o tempo para onde está pulando
+                    progressBar.setAttribute('aria-valuetext', `Pular para: ${formatTime(progressBar.value)}`);
+                    updateProgressFill();
+                });
+
+                // === IDEIA 3: LÓGICA DO CONTROLE DE VELOCIDADE ===
+                speedButtons.forEach(button => {
+                    // Marcar o botão de 1x como padrão
+                    if (button.dataset.speed == "1") {
+                        button.setAttribute('aria-pressed', 'true');
+                    } else {
+                        button.setAttribute('aria-pressed', 'false');
+                    }
+
+                    button.addEventListener('click', () => {
+                        const newSpeed = parseFloat(button.dataset.speed);
+                        audioPlayer.playbackRate = newSpeed;
+
+                        // Atualiza o estado visual/acessível de "pressionado"
+                        speedButtons.forEach(btn => btn.setAttribute('aria-pressed', 'false'));
+                        button.setAttribute('aria-pressed', 'true');
+                        
+                        // IDEIA 1: Anuncia a mudança de velocidade
+                        anunciador.textContent = `Velocidade definida para ${newSpeed}x.`;
+                    });
                 });
             }
         });
