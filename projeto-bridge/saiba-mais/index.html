@@ -45,9 +45,19 @@
         h2 { font-size: 1.8rem; margin-top: 40px; border-bottom: 1px solid #444; padding-bottom: 10px; }
         p, li { color: #bbb; margin-bottom: 15px; }
         section { margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        
+        /* CSS para a lista da nova seção */
+        .acessibilidade ul {
+            text-align: left; 
+            max-width: 700px; /* Alinha com o texto */
+            margin: 15px auto 0 auto; 
+            padding-left: 30px; /* Dá espaço para os marcadores */
+            color: #bbb; /* Garante que os <li> tenham a cor certa */
+        }
+        
         .placas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 30px; text-align: center; }
         
-        /* NOVO CSS: Para a seção de contato com um botão só */
+        /* CSS para a seção de contato com um botão só */
         .contato .placas-grid {
             grid-template-columns: 1fr; /* Força um botão só */
             max-width: 400px; /* Limita a largura do botão em telas grandes */
@@ -124,6 +134,18 @@
             <p>Desenvolvemos placas táteis, impressas em 3D, que simulam a tela de um osciloscópio. Elas permitem a exploração tátil de diferentes formas de onda (senoidal, quadrada, etc.), complementadas por áudios descritivos acessados via QR Code, tornando o aprendizado acessível e interativo.</p>
         </section>
 
+        <section class="acessibilidade">
+            <h2>Nosso Compromisso com a Acessibilidade</h2>
+            <p>
+                Além das placas táteis, o próprio site foi construído seguindo as melhores práticas de acessibilidade web (WCAG), garantindo que a experiência online seja tão acessível quanto a física.
+            </p>
+            <ul>
+                <li><strong>Navegação por Teclado:</strong> Todos os controles são 100% acessíveis sem a necessidade de um mouse.</li>
+                <li><strong>Leitores de Tela:</strong> O site fornece feedback audível instantâneo para todas as ações (Play, Pause, mudança de velocidade) e descreve o tempo exato na barra de progresso.</li>
+                <li><strong>Foco Visível:</strong> Um contorno claro e customizado indica exatamente onde o usuário está na página, facilitando a navegação.</li>
+                <li><strong>Controle Total do Usuário:</strong> O usuário pode não apenas ouvir, mas controlar a velocidade da narração e pular para partes específicas do áudio.</li>
+            </ul>
+        </section>
         <section class="validacao">
             <h2>Validação</h2>
             <div class="video-container">
