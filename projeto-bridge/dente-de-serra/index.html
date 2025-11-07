@@ -148,7 +148,7 @@
         <div class="gif-container">
             <img class="gif-invertido" src="./gif-dente-de-serra.gif" alt="Animação 3D da placa da onda dente de serra girando">
         </div>
-
+        
         <audio id="audio-da-pagina">
             <source src="./audio-dente-de-serra.mp3" type="audio/mpeg">
             Seu navegador não suporta o elemento de áudio.
@@ -168,26 +168,42 @@
             // Verifica se os elementos existem
             if (botaoPlayer && audioPlayer) {
                 
-                // Adiciona um "ouvinte" de clique no botão
+                // AÇÃO: O que o botão faz ao ser clicado
                 botaoPlayer.addEventListener('click', () => {
-                    
-                    // Se o áudio estiver pausado...
                     if (audioPlayer.paused) {
-                        audioPlayer.play(); // Toca o áudio
-                        botaoPlayer.innerHTML = '⏸ Pausar Descrição'; // Muda o texto do botão
-                        botaoPlayer.setAttribute('aria-label', 'Pausar descrição');
+                        // O play() já é inteligente: se o áudio terminou, 
+                        // ele reinicia; se estava pausado, ele continua.
+                        audioPlayer.play();
                     } else {
-                        // Se estiver tocando...
-                        audioPlayer.pause(); // Pausa o áudio
-                        botaoPlayer.innerHTML = '▶ Ouvir Descrição'; // Volta o texto original
-                        botaoPlayer.setAttribute('aria-label', 'Ouvir descrição');
+                        audioPlayer.pause();
                     }
                 });
 
-                // Opcional: Quando o áudio terminar, reseta o botão
+                // --- REAÇÃO: O que o botão MOSTRA ---
+                // Vamos usar os eventos do PRÓPRIO áudio para mudar o texto do botão.
+                // Isso é mais preciso.
+
+                // Quando o áudio começar a tocar (ou continuar)
+                audioPlayer.addEventListener('play', () => {
+                    botaoPlayer.innerHTML = '⏸ Pausar Descrição';
+                    botaoPlayer.setAttribute('aria-label', 'Pausar descrição');
+                });
+
+                // Quando o áudio for pausado (no meio)
+                audioPlayer.addEventListener('pause', () => {
+                    // Nós só mudamos para "Continuar" se o áudio NÃO tiver terminado
+                    if (!audioPlayer.ended) {
+                        botaoPlayer.innerHTML = '▶ Continuar Descrição';
+                        botaoPlayer.setAttribute('aria-label', 'Continuar descrição');
+                    }
+                });
+
+                // QUANDO O ÁUDIO TERMINAR (AQUI ESTÁ O REINICIAR)
                 audioPlayer.addEventListener('ended', () => {
-                    botaoPlayer.innerHTML = '▶ Ouvir Descrição';
-                    botaoPlayer.setAttribute('aria-label', 'Ouvir descrição');
+                    botaoPlayer.innerHTML = '▶ Reiniciar Descrição';
+                    botaoPlayer.setAttribute('aria-label', 'Reiniciar descrição');
+                    // Opcional: garantir que o tempo volte a 0.
+                    // audioPlayer.currentTime = 0; 
                 });
             }
         });
