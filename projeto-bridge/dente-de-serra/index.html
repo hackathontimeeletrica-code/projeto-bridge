@@ -10,6 +10,9 @@
         :root {
             --cor-fundo: #121212; --cor-container: #1e1e1e; --cor-texto: #e0e0e0;
             --cor-destaque: #00aaff; --cor-sombra: rgba(0, 0, 0, 0.4);
+            --cor-barra-preenchida: #00aaff; /* Cor do preenchimento da barra de progresso */
+            --cor-barra-vazia: #555;      /* Cor da parte não preenchida da barra */
+            --cor-thumb: #ffffff;         /* Cor do "círculo" que arrasta na barra */
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -32,7 +35,10 @@
         h1 { font-size: 2.2rem; color: white; margin-bottom: 20px; }
         p { line-height: 1.7; margin-bottom: 25px; }
         
-        /* O audio original agora está escondido (veja o HTML) */
+        /* Esconde o elemento de áudio padrão do navegador */
+        #audio-da-pagina {
+            display: none; 
+        }
         
         .gif-container img {
             max-width: 100%;
@@ -73,10 +79,14 @@
         }
 
         /* Container do botão player */
-        .player-container {
+        .player-controls {
             width: 100%;
+            max-width: 600px; /* Alinhe com o max-width do container para telas grandes */
             padding: 10px 0 20px 0; /* Espaçamento */
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         #botao-player-principal {
@@ -103,6 +113,7 @@
             
             /* Transição suave para o foco */
             transition: outline-offset 0.1s ease;
+            margin-bottom: 15px; /* Espaço entre o botão e a barra de progresso */
         }
 
         /* Foco visível para acessibilidade */
@@ -110,6 +121,69 @@
             outline: 4px solid var(--cor-destaque);
             outline-offset: 4px;
         }
+
+        /* =================================================== */
+        /* ESTILOS DA LINHA DO TEMPO (Progress Bar)          */
+        /* =================================================== */
+        .progress-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--cor-texto);
+            font-size: 0.9rem;
+            margin-bottom: 10px; /* Espaço abaixo da barra */
+        }
+
+        #progress-bar {
+            flex-grow: 1; /* Faz a barra ocupar o máximo de espaço */
+            -webkit-appearance: none; /* Remove estilos padrão do navegador */
+            appearance: none;
+            height: 12px; /* Altura da barra */
+            border-radius: 6px; /* Cantos arredondados */
+            background: var(--cor-barra-vazia);
+            outline: none;
+            cursor: pointer;
+            transition: opacity .2s; /* Efeito de hover */
+        }
+
+        #progress-bar:hover {
+            opacity: 0.8;
+        }
+
+        /* Estilo do "thumb" (o círculo ou quadrado que você arrasta) */
+        #progress-bar::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px; /* Tamanho do thumb */
+            height: 20px;
+            border-radius: 50%; /* Faz ele redondo */
+            background: var(--cor-thumb);
+            cursor: pointer;
+            margin-top: -4px; /* Ajusta a posição vertical do thumb */
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        #progress-bar::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--cor-thumb);
+            cursor: pointer;
+        }
+
+        /* Estilo da parte preenchida da barra (antes do thumb) */
+        #progress-bar::-webkit-slider-runnable-track {
+            background: linear-gradient(to right, var(--cor-barra-preenchida) var(--progress-value), var(--cor-barra-vazia) var(--progress-value));
+            border-radius: 6px;
+            height: 12px;
+        }
+        #progress-bar::-moz-range-track {
+            background: linear-gradient(to right, var(--cor-barra-preenchida) var(--progress-value), var(--cor-barra-vazia) var(--progress-value));
+            border-radius: 6px;
+            height: 12px;
+        }
+
 
         /* =================================================== */
         /* FIM DO NOVO CSS                                 */
@@ -139,10 +213,16 @@
         
         <h1>Placa: Onda Dente de Serra</h1>
 
-        <div class="player-container">
+        <div class="player-controls">
             <button id="botao-player-principal" aria-label="Ouvir descrição da onda dente de serra">
                 ▶ Ouvir Descrição
             </button>
+
+            <div class="progress-container">
+                <span id="current-time">0:00</span>
+                <input type="range" id="progress-bar" value="0" min="0" max="100" aria-label="Barra de progresso do áudio">
+                <span id="duration-time">0:00</span>
+            </div>
         </div>
         
         <div class="gif-container">
@@ -158,52 +238,83 @@
     </main>
 
     <script>
-        // Espera a página carregar
+        // Formata o tempo para MM:SS
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            const paddedSeconds = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
+            return `${minutes}:${paddedSeconds}`;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // Pega os elementos que vamos usar
             const botaoPlayer = document.getElementById('botao-player-principal');
             const audioPlayer = document.getElementById('audio-da-pagina');
+            const progressBar = document.getElementById('progress-bar');
+            const currentTimeSpan = document.getElementById('current-time');
+            const durationTimeSpan = document.getElementById('duration-time');
 
-            // Verifica se os elementos existem
-            if (botaoPlayer && audioPlayer) {
+            if (botaoPlayer && audioPlayer && progressBar && currentTimeSpan && durationTimeSpan) {
                 
-                // AÇÃO: O que o botão faz ao ser clicado
+                // === LÓGICA DO BOTÃO PLAY/PAUSE/RESTART ===
                 botaoPlayer.addEventListener('click', () => {
                     if (audioPlayer.paused) {
-                        // O play() já é inteligente: se o áudio terminou, 
-                        // ele reinicia; se estava pausado, ele continua.
                         audioPlayer.play();
                     } else {
                         audioPlayer.pause();
                     }
                 });
 
-                // --- REAÇÃO: O que o botão MOSTRA ---
-                // Vamos usar os eventos do PRÓPRIO áudio para mudar o texto do botão.
-                // Isso é mais preciso.
-
-                // Quando o áudio começar a tocar (ou continuar)
                 audioPlayer.addEventListener('play', () => {
                     botaoPlayer.innerHTML = '⏸ Pausar Descrição';
                     botaoPlayer.setAttribute('aria-label', 'Pausar descrição');
                 });
 
-                // Quando o áudio for pausado (no meio)
                 audioPlayer.addEventListener('pause', () => {
-                    // Nós só mudamos para "Continuar" se o áudio NÃO tiver terminado
                     if (!audioPlayer.ended) {
                         botaoPlayer.innerHTML = '▶ Continuar Descrição';
                         botaoPlayer.setAttribute('aria-label', 'Continuar descrição');
                     }
                 });
 
-                // QUANDO O ÁUDIO TERMINAR (AQUI ESTÁ O REINICIAR)
                 audioPlayer.addEventListener('ended', () => {
                     botaoPlayer.innerHTML = '▶ Reiniciar Descrição';
                     botaoPlayer.setAttribute('aria-label', 'Reiniciar descrição');
                     // Opcional: garantir que o tempo volte a 0.
                     // audioPlayer.currentTime = 0; 
+                });
+
+                // === LÓGICA DA BARRA DE PROGRESSO ===
+
+                // Quando o áudio estiver carregado e pronto para tocar (metadados disponíveis)
+                audioPlayer.addEventListener('loadedmetadata', () => {
+                    durationTimeSpan.textContent = formatTime(audioPlayer.duration);
+                    progressBar.max = audioPlayer.duration; // Define o valor máximo da barra
+                    
+                    // Adiciona uma propriedade CSS customizada para estilizar o preenchimento da barra
+                    // Isso é necessário porque input type="range" é chato de estilizar em navegadores diferentes
+                    const updateProgressFill = () => {
+                        const value = (progressBar.value / progressBar.max) * 100;
+                        progressBar.style.setProperty('--progress-value', `${value}%`);
+                    };
+                    updateProgressFill(); // Garante que o preenchimento inicial esteja correto
+                    
+                    // Listener para quando o valor da barra de progresso muda (seja por JS ou arrastando)
+                    progressBar.addEventListener('input', updateProgressFill);
+                });
+
+                // Atualiza a barra de progresso e o tempo atual enquanto o áudio toca
+                audioPlayer.addEventListener('timeupdate', () => {
+                    progressBar.value = audioPlayer.currentTime;
+                    currentTimeSpan.textContent = formatTime(audioPlayer.currentTime);
+                    
+                    // Atualiza o preenchimento da barra para navegadores que não suportam o estilo nativo
+                    const value = (progressBar.value / progressBar.max) * 100;
+                    progressBar.style.setProperty('--progress-value', `${value}%`);
+                });
+
+                // Quando o usuário interage com a barra de progresso (arrasta ou clica)
+                progressBar.addEventListener('input', () => {
+                    audioPlayer.currentTime = progressBar.value;
                 });
             }
         });
