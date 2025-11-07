@@ -31,7 +31,9 @@
         }
         h1 { font-size: 2.2rem; color: white; margin-bottom: 20px; }
         p { line-height: 1.7; margin-bottom: 25px; }
-        audio { width: 100%; max-width: 600px; margin-top: 25px; }
+        
+        /* O audio original agora está escondido (veja o HTML) */
+        
         .gif-container img {
             max-width: 100%;
             border-radius: 10px;
@@ -42,6 +44,76 @@
         
         .voltar { display: inline-block; margin-top: 40px; color: var(--cor-destaque); text-decoration: none; font-weight: bold; }
         .voltar:hover { text-decoration: underline; }
+
+        /* =================================================== */
+        /* INÍCIO DO NOVO CSS (PLAYER ACESSÍVEL)             */
+        /* =================================================== */
+
+        /* Link "Pular" para acessibilidade */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        .skip-link:focus {
+            left: 10px;
+            top: 10px;
+            width: auto;
+            height: auto;
+            padding: 10px;
+            background-color: var(--cor-container);
+            color: var(--cor-texto);
+            z-index: 1000;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid var(--cor-destaque);
+        }
+
+        /* Container do botão player */
+        .player-container {
+            width: 100%;
+            padding: 10px 0 20px 0; /* Espaçamento */
+            box-sizing: border-box;
+        }
+
+        #botao-player-principal {
+            /* --- TAMANHO E LAYOUT --- */
+            width: 100%;           
+            min-height: 70px;      
+            padding: 15px;         
+
+            /* --- VISUAL (Usando suas variáveis!) --- */
+            font-size: 1.5rem;     
+            font-weight: bold;     
+            color: var(--cor-fundo);  /* Cor do texto (escura) */
+            background-color: var(--cor-destaque); /* Cor de fundo (clara) */
+            
+            border: none;          
+            border-radius: 8px;    
+            cursor: pointer;       
+
+            /* Alinhamento do ícone e texto */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            
+            /* Transição suave para o foco */
+            transition: outline-offset 0.1s ease;
+        }
+
+        /* Foco visível para acessibilidade */
+        #botao-player-principal:focus {
+            outline: 4px solid var(--cor-destaque);
+            outline-offset: 4px;
+        }
+
+        /* =================================================== */
+        /* FIM DO NOVO CSS                                 */
+        /* =================================================== */
 
         /* Regras para telas maiores */
         @media (min-width: 768px) {
@@ -60,21 +132,65 @@
     </style>
 </head>
 <body>
-    <main class="container">
+    
+    <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
+
+    <main class="container" id="conteudo-principal">
+        
         <h1>Placa: Onda Dente de Serra</h1>
+
+        <div class="player-container">
+            <button id="botao-player-principal" aria-label="Ouvir descrição da onda dente de serra">
+                ▶ Ouvir Descrição
+            </button>
+        </div>
         
         <div class="gif-container">
             <img class="gif-invertido" src="./gif-dente-de-serra.gif" alt="Animação 3D da placa da onda dente de serra girando">
         </div>
 
-        <p>Clique no play abaixo para ouvir a descrição detalhada.</p>
-        
-        <audio controls autoplay>
+        <audio id="audio-da-pagina">
             <source src="./audio-dente-de-serra.mp3" type="audio/mpeg">
             Seu navegador não suporta o elemento de áudio.
         </audio>
         
         <a href="../" class="voltar">← Voltar para a página inicial</a>
     </main>
+
+    <script>
+        // Espera a página carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Pega os elementos que vamos usar
+            const botaoPlayer = document.getElementById('botao-player-principal');
+            const audioPlayer = document.getElementById('audio-da-pagina');
+
+            // Verifica se os elementos existem
+            if (botaoPlayer && audioPlayer) {
+                
+                // Adiciona um "ouvinte" de clique no botão
+                botaoPlayer.addEventListener('click', () => {
+                    
+                    // Se o áudio estiver pausado...
+                    if (audioPlayer.paused) {
+                        audioPlayer.play(); // Toca o áudio
+                        botaoPlayer.innerHTML = '⏸ Pausar Descrição'; // Muda o texto do botão
+                        botaoPlayer.setAttribute('aria-label', 'Pausar descrição');
+                    } else {
+                        // Se estiver tocando...
+                        audioPlayer.pause(); // Pausa o áudio
+                        botaoPlayer.innerHTML = '▶ Ouvir Descrição'; // Volta o texto original
+                        botaoPlayer.setAttribute('aria-label', 'Ouvir descrição');
+                    }
+                });
+
+                // Opcional: Quando o áudio terminar, reseta o botão
+                audioPlayer.addEventListener('ended', () => {
+                    botaoPlayer.innerHTML = '▶ Ouvir Descrição';
+                    botaoPlayer.setAttribute('aria-label', 'Ouvir descrição');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
