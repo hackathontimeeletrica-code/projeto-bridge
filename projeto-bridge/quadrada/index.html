@@ -31,7 +31,11 @@
         #audio-da-pagina { display: none; }
         
         .gif-container img { max-width: 100%; border-radius: 10px; border: 1px solid #333; }
-        .gif-invertido { transform: rotate(180deg); } */
+        
+        /* =================================================== */
+        /* CORREÇÃO: Classe descomentada para girar o GIF   */
+        /* =================================================== */
+        .gif-invertido { transform: rotate(180deg); }
         
         .voltar { display: inline-block; margin-top: 40px; color: var(--cor-destaque); text-decoration: none; font-weight: bold; }
         .voltar:hover { text-decoration: underline; }
@@ -233,7 +237,7 @@
         </div>
 
         <div class="gif-container">
-             <img src="./gif-quadrada.gif" alt="Animação 3D da placa da onda quadrada girando">
+             <img class="gif-invertido" src="./gif-quadrada.gif" alt="Animação 3D da placa da onda quadrada girando">
         </div>
 
         <div class="sr-only">
@@ -356,4 +360,3 @@
     </script>
 </body>
 </html>
-
