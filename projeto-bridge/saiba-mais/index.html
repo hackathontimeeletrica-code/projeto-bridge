@@ -58,11 +58,14 @@
         .placas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 30px; text-align: center; }
         
         /* CSS para a seção de contato com um botão só */
-        .contato .placas-grid {
-            grid-template-columns: 1fr; /* Força um botão só */
-            max-width: 400px; /* Limita a largura do botão em telas grandes */
+        .contato .placas-grid,
+        /* FAZ O BOTÃO DE DOWNLOAD ÚNICO FICAR CENTRALIZADO E COM LARGURA MÁXIMA */
+        .placas .placas-grid + .btn { 
+            grid-template-columns: 1fr;
+            max-width: 400px;
             margin-left: auto;
             margin-right: auto;
+            display: block; /* Garante que o 'a' como .btn se comporte */
         }
         
         .placa-card { background-color: #2a2a2a; border-radius: 8px; padding: 20px; border: 1px solid #333; }
@@ -146,13 +149,14 @@
                 <li><strong>Controle Total do Usuário:</strong> O usuário pode não apenas ouvir, mas controlar a velocidade da narração e pular para partes específicas do áudio.</li>
             </ul>
         </section>
+
         <section class="validacao">
             <h2>Validação</h2>
             <div class="video-container">
                 <iframe src="https://www.youtube.com/embed/GMZYKEF6v8Y" title="Depoimento em vídeo sobre o projeto Eletricidade sem Barreiras" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             <blockquote>
-                "O projeto se constitui como valioso material para a compreensão dos fenômenos da eletricidade, visto que aquilo que sempre foi invisível e teórico para quem não enxerga, passa a ser concreto. Para o deficiente visual, a possibilidade de tatear os objetos faz com que a experiência de aprender se torne mais interessante e o aprendizado mais efetivo. A internalização da informação é garantida se o conhecimento teórico também estiver ao alcance das mãos."
+                "O projeto se constitui como valioso material para a compreensão dos fenômenos da eletricidade, visto que aquilo que sempre foi invisível e teórico para quem não enxerga, passa a ser concreto. Para o deficiente visual, a possibilidade de tatear os objetos faz com que a experiência de aprender se torne mais interessante e o aprendizado mais efetivo. A internalização da informação é garantada se o conhecimento teórico também estiver ao alcance das mãos."
                 <footer>— Rodrigo Galhardi, Coordenador Pedagógico</footer>
             </blockquote>
         </section>
@@ -161,7 +165,7 @@
             <h2>Acesse o Projeto</h2>
             <div class="placas-grid">
                 <a href="https://youtu.be/ShI4CwfhxW4" class="btn" target="_blank">Assistir ao Pitch do Projeto <span class="sr-only">(abre em nova aba)</span></a>
-                <a href="https://projeto-bridge-eta.vercel.app/" class="btn" target="_blank">Acessar o Protótipo Funcional <span class="sr-only">(abre em nova aba)</span></a>
+                <a href="httpsar://projeto-bridge-eta.vercel.app/" class="btn" target="_blank">Acessar o Protótipo Funcional <span class="sr-only">(abre em nova aba)</span></a>
             </div>
         </section>
 
@@ -190,7 +194,11 @@
                     <img src="../assets/qrcode-dente-de-serra.jpeg" alt="QR Code para o áudio da Onda Dente de Serra">
                 </div>
             </div>
-            <a href="../assets/modelos-3d-bridge.zip" class="btn" download>Baixar todos os arquivos .STL</a>
+
+            <a href="../assets/pacote-completo-esb.zip" class="btn" download>
+                Baixar Pacote Completo (STLs e QR Codes)
+            </a>
+
         </section>
 
         <section class="equipe">
