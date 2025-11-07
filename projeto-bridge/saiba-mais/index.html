@@ -15,7 +15,7 @@
             background-color: var(--cor-fundo); color: var(--cor-texto); line-height: 1.7;
         }
         
-        /* MELHORIA DE ACESSIBILIDADE: CSS do Skip Link */
+        /* CSS do Skip Link */
         .skip-link {
             position: absolute;
             left: -9999px;
@@ -46,6 +46,15 @@
         p, li { color: #bbb; margin-bottom: 15px; }
         section { margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto; }
         .placas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 30px; text-align: center; }
+        
+        /* NOVO CSS: Para a seção de contato com um botão só */
+        .contato .placas-grid {
+            grid-template-columns: 1fr; /* Força um botão só */
+            max-width: 400px; /* Limita a largura do botão em telas grandes */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
         .placa-card { background-color: #2a2a2a; border-radius: 8px; padding: 20px; border: 1px solid #333; }
         .placa-card h3 { color: #fff; margin-bottom: 15px; }
         .placa-card img { max-width: 100%; height: auto; border-radius: 5px; margin-bottom: 15px; }
@@ -53,7 +62,7 @@
         .btn { display: inline-block; margin-top: 15px; padding: 12px 25px; background-color: var(--cor-destaque); color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background-color 0.3s, outline-offset 0.1s ease; text-align: center; }
         .btn:hover { background-color: #0088cc; }
         
-        /* MELHORIA DE FOCO: Foco visível para botões */
+        /* Foco visível para botões */
         .btn:focus-visible {
             background-color: #0088cc;
             outline: 3px solid var(--cor-destaque);
@@ -68,7 +77,7 @@
         .voltar { display: block; text-align: center; margin-top: 40px; color: var(--cor-destaque); font-weight: bold; text-decoration: none; font-size: 1.1em; transition: text-decoration 0.2s, outline-offset 0.1s ease; }
         .voltar:hover { text-decoration: underline; }
         
-        /* MELHORIA DE FOCO: Foco visível para link de voltar */
+        /* Foco visível para link de voltar */
         .voltar:focus-visible {
             text-decoration: underline;
             outline: 2px solid var(--cor-destaque);
@@ -81,7 +90,7 @@
             border: 0; /* 'frameborder' movido para cá */
         }
 
-        /* MELHORIA DE ACESSIBILIDADE: Classe para "nova aba" */
+        /* Classe para "nova aba" */
         .sr-only {
             position: absolute;
             left: -9999px;
@@ -172,6 +181,16 @@
                 <li>Celso Iwata Frison</li>
                 <li>Tálisson de Souza Barbosa</li>
             </ul>
+        </section>
+
+        <section class="contato">
+            <h2>Contato</h2>
+            <p>Entre em contato com a equipe por e-mail. Futuramente, teremos mais redes sociais!</p>
+            <div class="placas-grid">
+                <a href="mailto:hackathontimeeletrica@gmail.com" class="btn">
+                    Enviar E-mail (hackathontimeeletrica@gmail.com)
+                </a>
+            </div>
         </section>
 
         <a href="../" class="voltar">← Voltar para a página inicial</a>
