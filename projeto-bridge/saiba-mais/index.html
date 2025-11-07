@@ -14,6 +14,31 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--cor-fundo); color: var(--cor-texto); line-height: 1.7;
         }
+        
+        /* MELHORIA DE ACESSIBILIDADE: CSS do Skip Link */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        .skip-link:focus {
+            position: fixed;
+            left: 10px;
+            top: 10px;
+            width: auto;
+            height: auto;
+            padding: 10px;
+            background-color: var(--cor-container);
+            color: var(--cor-destaque);
+            z-index: 1000;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid var(--cor-destaque);
+        }
+        
         .container { width: 100%; min-height: 100vh; background-color: var(--cor-fundo); padding: 40px 20px; }
         h1, h2 { color: white; text-align: center; margin-bottom: 20px; }
         h1 { font-size: 2.5rem; color: var(--cor-destaque); }
@@ -24,16 +49,47 @@
         .placa-card { background-color: #2a2a2a; border-radius: 8px; padding: 20px; border: 1px solid #333; }
         .placa-card h3 { color: #fff; margin-bottom: 15px; }
         .placa-card img { max-width: 100%; height: auto; border-radius: 5px; margin-bottom: 15px; }
-        .btn { display: inline-block; margin-top: 15px; padding: 12px 25px; background-color: var(--cor-destaque); color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background-color 0.3s; text-align: center; }
+        
+        .btn { display: inline-block; margin-top: 15px; padding: 12px 25px; background-color: var(--cor-destaque); color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background-color 0.3s, outline-offset 0.1s ease; text-align: center; }
         .btn:hover { background-color: #0088cc; }
+        
+        /* MELHORIA DE FOCO: Foco visível para botões */
+        .btn:focus-visible {
+            background-color: #0088cc;
+            outline: 3px solid var(--cor-destaque);
+            outline-offset: 3px;
+        }
+        
         .equipe ul { list-style: none; text-align: center; padding: 0; }
         blockquote { border-left: 4px solid var(--cor-destaque); padding-left: 20px; margin: 20px 0; font-style: italic; color: #ccc; }
         blockquote footer { font-style: normal; color: #aaa; margin-top: 10px; font-weight: bold; }
         .links-uteis { text-align: center; }
-        .voltar { display: block; text-align: center; margin-top: 40px; color: var(--cor-destaque); font-weight: bold; text-decoration: none; font-size: 1.1em; }
+        
+        .voltar { display: block; text-align: center; margin-top: 40px; color: var(--cor-destaque); font-weight: bold; text-decoration: none; font-size: 1.1em; transition: text-decoration 0.2s, outline-offset 0.1s ease; }
         .voltar:hover { text-decoration: underline; }
+        
+        /* MELHORIA DE FOCO: Foco visível para link de voltar */
+        .voltar:focus-visible {
+            text-decoration: underline;
+            outline: 2px solid var(--cor-destaque);
+            outline-offset: 3px;
+        }
+        
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; margin-bottom: 30px; border-radius: 8px; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .video-container iframe { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            border: 0; /* 'frameborder' movido para cá */
+        }
+
+        /* MELHORIA DE ACESSIBILIDADE: Classe para "nova aba" */
+        .sr-only {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
 
         @media (min-width: 768px) {
             .container {
@@ -45,8 +101,9 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Eletricidade sem Barreiras</h1>
+    <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
+
+    <div class="container" id="conteudo-principal"> <h1>Eletricidade sem Barreiras</h1>
 
         <section class="problema">
             <h2>O Problema</h2>
@@ -61,7 +118,7 @@
         <section class="validacao">
             <h2>Validação</h2>
             <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/GMZYKEF6v8Y" title="Depoimento em vídeo sobre o projeto Eletricidade sem Barreiras" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/GMZYKEF6v8Y" title="Depoimento em vídeo sobre o projeto Eletricidade sem Barreiras" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             <blockquote>
                 "O projeto se constitui como valioso material para a compreensão dos fenômenos da eletricidade, visto que aquilo que sempre foi invisível e teórico para quem não enxerga, passa a ser concreto. Para o deficiente visual, a possibilidade de tatear os objetos faz com que a experiência de aprender se torne mais interessante e o aprendizado mais efetivo. A internalização da informação é garantida se o conhecimento teórico também estiver ao alcance das mãos."
@@ -72,8 +129,8 @@
         <section class="links-uteis">
             <h2>Acesse o Projeto</h2>
             <div class="placas-grid">
-                <a href="https://youtu.be/ShI4CwfhxW4" class="btn" target="_blank">Assistir ao Pitch do Projeto</a>
-                <a href="https://projeto-bridge-eta.vercel.app/" class="btn" target="_blank">Acessar o Protótipo Funcional</a>
+                <a href="https://youtu.be/ShI4CwfhxW4" class="btn" target="_blank">Assistir ao Pitch do Projeto <span class="sr-only">(abre em nova aba)</span></a>
+                <a href="https://projeto-bridge-eta.vercel.app/" class="btn" target="_blank">Acessar o Protótipo Funcional <span class="sr-only">(abre em nova aba)</span></a>
             </div>
         </section>
 
