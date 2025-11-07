@@ -46,7 +46,7 @@
         p, li { color: #bbb; margin-bottom: 15px; }
         section { margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto; }
         
-        /* CSS para a lista da nova seção */
+        /* CSS para a lista da seção de acessibilidade */
         .acessibilidade ul {
             text-align: left; 
             max-width: 700px; /* Alinha com o texto */
@@ -57,11 +57,13 @@
         
         .placas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 30px; text-align: center; }
         
-        /* CSS para a seção de contato com um botão só */
-        .contato .placas-grid,
-        /* FAZ O BOTÃO DE DOWNLOAD ÚNICO FICAR CENTRALIZADO E COM LARGURA MÁXIMA */
-        .placas .placas-grid + .btn { 
-            grid-template-columns: 1fr;
+        /* =================================================== */
+        /* MUDANÇA NO CSS AQUI                             */
+        /* =================================================== */
+        /* Remove o CSS antigo que forçava uma coluna só no Contato. */
+        /* Agora, apenas o botão de Download (que é um <a> e não um grid) 
+           será centralizado e limitado. */
+        .placas-grid + .btn { 
             max-width: 400px;
             margin-left: auto;
             margin-right: auto;
@@ -143,20 +145,18 @@
                 Além das placas táteis, o próprio site foi construído seguindo as melhores práticas de acessibilidade web (WCAG), garantindo que a experiência online seja tão acessível quanto a física.
             </p>
             <ul>
-                <li><strong>Navegação por Teclado:</strong> Todos os controles são 100% acessíveis sem a necessidade de um mouse.</li>
                 <li><strong>Leitores de Tela:</strong> O site fornece feedback audível instantâneo para todas as ações (Play, Pause, mudança de velocidade) e descreve o tempo exato na barra de progresso.</li>
                 <li><strong>Foco Visível:</strong> Um contorno claro e customizado indica exatamente onde o usuário está na página, facilitando a navegação.</li>
                 <li><strong>Controle Total do Usuário:</strong> O usuário pode não apenas ouvir, mas controlar a velocidade da narração e pular para partes específicas do áudio.</li>
             </ul>
         </section>
-
         <section class="validacao">
             <h2>Validação</h2>
             <div class="video-container">
                 <iframe src="https://www.youtube.com/embed/GMZYKEF6v8Y" title="Depoimento em vídeo sobre o projeto Eletricidade sem Barreiras" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             <blockquote>
-                "O projeto se constitui como valioso material para a compreensão dos fenômenos da eletricidade, visto que aquilo que sempre foi invisível e teórico para quem não enxerga, passa a ser concreto. Para o deficiente visual, a possibilidade de tatear os objetos faz com que a experiência de aprender se torne mais interessante e o aprendizado mais efetivo. A internalização da informação é garantada se o conhecimento teórico também estiver ao alcance das mãos."
+                "O projeto se constitui como valioso material para a compreensão dos fenômenos da eletricidade, visto que aquilo que sempre foi invisível e teórico para quem não enxerga, passa a ser concreto. Para o deficiente visual, a possibilidade de tatear os objetos faz com que a experiência de aprender se torne mais interessante e o aprendizado mais efetivo. A internalização da informação é garantida se o conhecimento teórico também estiver ao alcance das mãos."
                 <footer>— Rodrigo Galhardi, Coordenador Pedagógico</footer>
             </blockquote>
         </section>
@@ -165,7 +165,7 @@
             <h2>Acesse o Projeto</h2>
             <div class="placas-grid">
                 <a href="https://youtu.be/ShI4CwfhxW4" class="btn" target="_blank">Assistir ao Pitch do Projeto <span class="sr-only">(abre em nova aba)</span></a>
-                <a href="httpsar://projeto-bridge-eta.vercel.app/" class="btn" target="_blank">Acessar o Protótipo Funcional <span class="sr-only">(abre em nova aba)</span></a>
+                <a href="https://projeto-bridge-eta.vercel.app/" class="btn" target="_blank">Acessar o Protótipo Funcional <span class="sr-only">(abre em nova aba)</span></a>
             </div>
         </section>
 
@@ -194,11 +194,9 @@
                     <img src="../assets/qrcode-dente-de-serra.jpeg" alt="QR Code para o áudio da Onda Dente de Serra">
                 </div>
             </div>
-
             <a href="../assets/pacote-completo-esb.zip" class="btn" download>
                 Baixar Pacote Completo (STLs e QR Codes)
             </a>
-
         </section>
 
         <section class="equipe">
@@ -214,11 +212,15 @@
         </section>
 
         <section class="contato">
-            <h2>Contato</h2>
-            <p>Entre em contato com a equipe por e-mail. Futuramente, teremos mais redes sociais!</p>
+            <h2>Contato e Redes Sociais</h2>
+            <p>Entre em contato conosco ou acompanhe o projeto!</p>
             <div class="placas-grid">
                 <a href="mailto:hackathontimeeletrica@gmail.com" class="btn">
-                    Enviar E-mail (hackathontimeeletrica@gmail.com)
+                    Enviar E-mail
+                </a>
+                <a href="httpsD://www.instagram.com/eletricidade_sem_barreiras?igsh=ZzZsbmZueGs4dW9h" class="btn" target="_blank">
+                    Seguir no Instagram
+                    <span class="sr-only">(abre em nova aba)</span>
                 </a>
             </div>
         </section>
