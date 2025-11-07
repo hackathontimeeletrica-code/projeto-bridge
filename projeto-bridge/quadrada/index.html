@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Onda Quadrada - Projeto Bridge</title>
+    
+    <title>Onda Quadrada - Eletricidade sem Barreiras</title>
+    
     <style>
         :root {
             --cor-fundo: #121212; --cor-container: #1e1e1e; --cor-texto: #e0e0e0;
             --cor-destaque: #00aaff; --cor-sombra: rgba(0, 0, 0, 0.4);
+            --cor-barra-preenchida: #00aaff;
+            --cor-barra-vazia: #555;
+            --cor-thumb: #ffffff;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -20,14 +25,175 @@
             justify-content: center; align-items: center; padding: 40px 20px; text-align: center;
         }
         h1 { font-size: 2.2rem; color: white; margin-bottom: 20px; }
-        p { line-height: 1.7; margin-bottom: 25px; }
-        audio { width: 100%; max-width: 600px; margin-top: 25px; }
+        p { line-height: 1.7; margin-bottom: 25px; } /* Usado pela descrição sr-only */
+        
+        /* O áudio padrão é escondido */
+        #audio-da-pagina { display: none; }
+        
         .gif-container img { max-width: 100%; border-radius: 10px; border: 1px solid #333; }
-        /* Adicione a classe .gif-invertido apenas se o seu GIF da quadrada precisar ser girado */
         /* .gif-invertido { transform: rotate(180deg); } */
+        
         .voltar { display: inline-block; margin-top: 40px; color: var(--cor-destaque); text-decoration: none; font-weight: bold; }
         .voltar:hover { text-decoration: underline; }
 
+        /* =================================================== */
+        /* CSS DO PLAYER ACESSÍVEL                           */
+        /* =================================================== */
+
+        /* Classe para esconder visualmente mas manter para leitores de tela */
+        .sr-only {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+        /* Link "Pular" para acessibilidade */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        .skip-link:focus {
+            position: fixed; /* Para ficar por cima de tudo */
+            left: 10px;
+            top: 10px;
+            width: auto;
+            height: auto;
+            padding: 10px;
+            background-color: var(--cor-container);
+            color: var(--cor-texto);
+            z-index: 1000;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid var(--cor-destaque);
+        }
+
+        /* Container do botão player */
+        .player-controls {
+            width: 100%;
+            max-width: 600px;
+            padding: 10px 0 20px 0; 
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        #botao-player-principal {
+            width: 100%;           
+            min-height: 70px;      
+            padding: 15px;         
+            font-size: 1.5rem;     
+            font-weight: bold;     
+            color: var(--cor-fundo);  
+            background-color: var(--cor-destaque);
+            border: none;          
+            border-radius: 8px;    
+            cursor: pointer;       
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: outline-offset 0.1s ease;
+            margin-bottom: 15px; /* Espaço para a barra de progresso */
+        }
+
+        #botao-player-principal:focus {
+            outline: 4px solid var(--cor-destaque);
+            outline-offset: 4px;
+        }
+
+        /* ESTILOS DA LINHA DO TEMPO (Progress Bar) */
+        .progress-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--cor-texto);
+            font-size: 0.9rem;
+            margin-bottom: 10px; 
+        }
+
+        #progress-bar {
+            flex-grow: 1; 
+            -webkit-appearance: none; 
+            appearance: none;
+            height: 12px; 
+            border-radius: 6px; 
+            background: var(--cor-barra-vazia);
+            outline: none;
+            cursor: pointer;
+            transition: opacity .2s; 
+        }
+
+        #progress-bar:hover {
+            opacity: 0.8;
+        }
+
+        /* Estilo do "thumb" (o círculo que arrasta) */
+        #progress-bar::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px; 
+            height: 20px;
+            border-radius: 50%; 
+            background: var(--cor-thumb);
+            cursor: pointer;
+            margin-top: -4px; 
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        #progress-bar::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--cor-thumb);
+            cursor: pointer;
+        }
+
+        /* Estilo da parte preenchida da barra */
+        #progress-bar::-webkit-slider-runnable-track {
+            background: linear-gradient(to right, var(--cor-barra-preenchida) var(--progress-value, 0%), var(--cor-barra-vazia) var(--progress-value, 0%));
+            border-radius: 6px;
+            height: 12px;
+        }
+        #progress-bar::-moz-range-track {
+             background: linear-gradient(to right, var(--cor-barra-preenchida) var(--progress-value, 0%), var(--cor-barra-vazia) var(--progress-value, 0%));
+            border-radius: 6px;
+            height: 12px;
+        }
+
+        /* ESTILOS DO CONTROLE DE VELOCIDADE */
+        .speed-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 15px; 
+        }
+        .speed-btn {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--cor-destaque);
+            background-color: transparent;
+            border: 2px solid var(--cor-destaque);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .speed-btn[aria-pressed="true"] {
+            background-color: var(--cor-destaque);
+            color: var(--cor-fundo);
+        }
+        
+        /* Regras para telas maiores */
         @media (min-width: 768px) {
             .container {
                 width: 90%; max-width: 700px; margin: 40px auto; border-radius: 12px;
@@ -39,17 +205,154 @@
     </style>
 </head>
 <body>
-    <main class="container">
+
+    <div id="status-anunciador" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+    
+    <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
+
+    <main class="container" id="conteudo-principal">
         <h1>Placa: Onda Quadrada</h1>
+
+        <div class="player-controls">
+            
+            <button id="botao-player-principal" aria-label="Ouvir descrição da onda quadrada">
+                ▶ Ouvir Descrição
+            </button>
+
+            <div class="progress-container">
+                <span id="current-time">0:00</span>
+                <input type="range" id="progress-bar" value="0" min="0" max="100" aria-label="Barra de progresso do áudio">
+                <span id="duration-time">0:00</span>
+            </div>
+
+            <div class="speed-controls" role="group" aria-label="Controle de velocidade">
+                <button class="speed-btn" data-speed="1">1x</button>
+                <button class="speed-btn" data-speed="1.5">1.5x</button>
+                <button class="speed-btn" data-speed="2">2x</button>
+            </div>
+        </div>
+
         <div class="gif-container">
              <img src="./gif-quadrada.gif" alt="Animação 3D da placa da onda quadrada girando">
         </div>
-        <p>Clique no play abaixo para ouvir a descrição detalhada.</p>
-        <audio controls autoplay>
+
+        <div class="sr-only">
+            <h3>Descrição da Placa Tátil</h3>
+            <p>
+                A placa tátil 3D exibe a forma de onda quadrada. 
+                Possui uma linha de base texturizada. A onda em si é um relevo alto que alterna 
+                abruptamente entre um nível máximo (alto) e um nível mínimo (baixo), 
+                criando blocos retangulares. Inscrições em Braille na parte superior 
+                indicam "ONDA QUADRADA".
+                (Substitua este texto pela descrição real da sua placa).
+            </p>
+        </div>
+        
+        <audio id="audio-da-pagina">
             <source src="./audio-quadrada.mp3" type="audio/mpeg">
             Seu navegador não suporta o elemento de áudio.
         </audio>
+        
         <a href="../" class="voltar">← Voltar para a página inicial</a>
     </main>
+
+    <script>
+        // Formata o tempo para MM:SS
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            const paddedSeconds = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
+            return `${minutes}:${paddedSeconds}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Pegando todos os elementos
+            const botaoPlayer = document.getElementById('botao-player-principal');
+            const audioPlayer = document.getElementById('audio-da-pagina');
+            const progressBar = document.getElementById('progress-bar');
+            const currentTimeSpan = document.getElementById('current-time');
+            const durationTimeSpan = document.getElementById('duration-time');
+            const anunciador = document.getElementById('status-anunciador');
+            const speedButtons = document.querySelectorAll('.speed-btn');
+
+            // Verifica se todos os elementos essenciais existem
+            if (botaoPlayer && audioPlayer && progressBar && currentTimeSpan && durationTimeSpan && anunciador && speedButtons.length > 0) {
+                
+                // === LÓGICA DO BOTÃO PLAY/PAUSE/RESTART ===
+                botaoPlayer.addEventListener('click', () => {
+                    if (audioPlayer.paused) {
+                        audioPlayer.play();
+                    } else {
+                        audioPlayer.pause();
+                    }
+                });
+
+                audioPlayer.addEventListener('play', () => {
+                    botaoPlayer.innerHTML = '⏸ Pausar Descrição';
+                    botaoPlayer.setAttribute('aria-label', 'Pausar descrição');
+                    anunciador.textContent = 'Áudio iniciado.'; 
+                });
+
+                audioPlayer.addEventListener('pause', () => {
+                    if (!audioPlayer.ended) {
+                        botaoPlayer.innerHTML = '▶ Continuar Descrição';
+                        botaoPlayer.setAttribute('aria-label', 'Continuar descrição');
+                        anunciador.textContent = 'Áudio pausado.';
+                    }
+                });
+
+                audioPlayer.addEventListener('ended', () => {
+                    botaoPlayer.innerHTML = '▶ Reiniciar Descrição';
+                    botaoPlayer.setAttribute('aria-label', 'Reiniciar descrição');
+                    anunciador.textContent = 'Áudio terminado. Pronto para reiniciar.';
+                });
+
+                // === LÓGICA DA BARRA DE PROGRESSO ===
+
+                const updateProgressFill = () => {
+                    const value = (progressBar.value / progressBar.max) * 100 || 0;
+                    progressBar.style.setProperty('--progress-value', `${value}%`);
+                };
+
+                audioPlayer.addEventListener('loadedmetadata', () => {
+                    const duration = audioPlayer.duration;
+                    durationTimeSpan.textContent = formatTime(duration);
+                    progressBar.max = duration;
+                    updateProgressFill();
+                });
+
+                audioPlayer.addEventListener('timeupdate', () => {
+                    const currentTime = audioPlayer.currentTime;
+                    progressBar.value = currentTime;
+                    currentTimeSpan.textContent = formatTime(currentTime);
+                    progressBar.setAttribute('aria-valuetext', `Tempo atual: ${formatTime(currentTime)}`);
+                    updateProgressFill();
+                });
+
+                progressBar.addEventListener('input', () => {
+                    audioPlayer.currentTime = progressBar.value;
+                    progressBar.setAttribute('aria-valuetext', `Pular para: ${formatTime(progressBar.value)}`);
+                    updateProgressFill();
+                });
+
+                // === LÓGICA DO CONTROLE DE VELOCIDADE ===
+                speedButtons.forEach(button => {
+                    if (button.dataset.speed == "1") {
+                        button.setAttribute('aria-pressed', 'true');
+                    } else {
+                        button.setAttribute('aria-pressed', 'false');
+                    }
+
+                    button.addEventListener('click', () => {
+                        const newSpeed = parseFloat(button.dataset.speed);
+                        audioPlayer.playbackRate = newSpeed;
+                        speedButtons.forEach(btn => btn.setAttribute('aria-pressed', 'false'));
+                        button.setAttribute('aria-pressed', 'true');
+                        anunciador.textContent = `Velocidade definida para ${newSpeed}x.`;
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
